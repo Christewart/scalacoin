@@ -1,5 +1,7 @@
 package org.scalacoin.protocol.transaction
 
+import org.scalacoin.currency.Satoshis
+import org.scalacoin.marshallers.transaction.TransactionElement
 import org.scalacoin.protocol.{NetworkVarInt, VarInt}
 
 /**
@@ -7,37 +9,29 @@ import org.scalacoin.protocol.{NetworkVarInt, VarInt}
  */
 
 
-trait Transaction {
+trait Transaction extends TransactionElement {
+  def txId : String
   def version : Long
-  def txInCount : VarInt
-  def txIn : Seq[TxIn]
-  def txOutCount : VarInt
-  def txOut : TxOut
+  def inputs  : Seq[TransactionInput]
+  def outputs : Seq[TransactionOutput]
   def lockTime : Long
+
+  def inputsSize = inputs.map(_.size).sum
+  def outputsSize = outputs.map(_.size).sum
+
+  //https://bitcoin.org/en/developer-reference#raw-transaction-format
+  override def size = 4 + inputsSize + outputsSize  + 4
 }
 
-case class NetworkTx(serialization : String ) extends Transaction {
-  require(!serialization.contains(" "), "Your network transaction contains whitespace")
-  override def version = java.lang.Long.parseLong(serialization.slice(0,8),16)
-  override def txInCount : VarInt = NetworkVarInt("FF")
-  override def txIn : Seq[TxIn] = Seq()
-  override def txOutCount : VarInt = NetworkVarInt("FF")
-  override def txOut : TxOut = TxOut(1,NetworkVarInt("FF"), Seq())
-  override def lockTime : Long = 0
-
-}
+case class TransactionImpl(txId : String, version : Long, inputs : Seq[TransactionInput],
+  outputs : Seq[TransactionOutput], lockTime : Long) extends Transaction
 
 
-trait TxIn {
-
-  def prevousOutput : OutPoint
-  def scriptLength : VarInt
-  def scriptSignature : Seq[Char]
-  def sequence : Long
-}
 
 
-case class OutPoint(hash : Seq[Char], index : Long)
 
-case class TxOut(value : Long, pkScriptLength : VarInt, pkScript : Seq[Char])
+
+
+
+
 
