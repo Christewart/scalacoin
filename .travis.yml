@@ -1,4 +1,4 @@
-langauage: scala
+language: scala
 
 branches:
   only:
