@@ -1,0 +1,6 @@
+langauage: scala
+
+branches:
+  only:
+    - master
+    - script
