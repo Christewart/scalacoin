@@ -32,6 +32,9 @@ trait TransactionSignatureChecker extends BitcoinSLogger {
     if (ScriptFlagUtil.requiresStrictDerEncoding(flags) && !DERSignatureUtil.isStrictDEREncoding(signature)) {
       logger.error("Signature was not stricly encoded der: " + signature.hex)
       SignatureValidationFailureNotStrictDerEncoding
+    } else if (ScriptFlagUtil.requireLowSValue(flags) && !DERSignatureUtil.isLowDerSignature(signature)) {
+      logger.error("Signature did not have a low s value")
+      ScriptValidationFailureHighSValue
     } else if (!pubKeyEncodedCorrectly) {
       logger.error("The public key given for signature checking was not encoded correctly")
       SignatureValidationFailurePubKeyEncoding
@@ -100,6 +103,7 @@ trait TransactionSignatureChecker extends BitcoinSLogger {
           SignatureValidationFailureSignatureCount
         case SignatureValidationFailurePubKeyEncoding =>
           SignatureValidationFailurePubKeyEncoding
+        case ScriptValidationFailureHighSValue => ScriptValidationFailureHighSValue
       }
     } else if (sigs.isEmpty) {
       //means that we have checked all of the sigs against the public keys
