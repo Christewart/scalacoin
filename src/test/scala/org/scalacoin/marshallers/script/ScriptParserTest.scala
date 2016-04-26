@@ -27,7 +27,7 @@ class ScriptParserTest extends FlatSpec with MustMatchers with ScriptParser with
   }
 
   it must "parse a number larger than an integer into a ScriptNumberImpl" in {
-    fromString("2147483648") must be (List(ScriptNumberFactory.fromNumber(2147483648L)))
+    fromString("2147483648") must be (List(ScriptNumber(2147483648L)))
   }
 
   it must "parse a pay-to-pubkey-hash output script" in {
@@ -62,12 +62,12 @@ class ScriptParserTest extends FlatSpec with MustMatchers with ScriptParser with
 
    it must "parse a script constant from 'Az' EQUAL" in {
      val str = "'Az' EQUAL"
-     fromString(str) must equal (List(BytesToPushOntoStackFactory.fromNumber(2).get, ScriptConstantFactory.fromHex("417a"), OP_EQUAL))
+     fromString(str) must equal (List(BytesToPushOntoStack(2).get, ScriptConstant("417a"), OP_EQUAL))
    }
 
    it must "parse a script number that has a leading zero" in {
      val str = "0x02 0x0100"
-     fromString(str) must equal (List(BytesToPushOntoStackFactory.factory(2).get, ScriptConstantFactory.fromHex("0100")))
+     fromString(str) must equal (List(BytesToPushOntoStack(2).get, ScriptConstant("0100")))
    }
 
 
@@ -83,8 +83,8 @@ class ScriptParserTest extends FlatSpec with MustMatchers with ScriptParser with
 
    it must "parse a script that has a decimal and a hexadecimal number in it " in  {
      val str = "32767 0x02 0xff7f EQUAL"
-     fromString(str) must equal (List(BytesToPushOntoStackFactory.fromNumber(2).get, ScriptConstantFactory.fromHex("ff7f"),
-       BytesToPushOntoStackImpl(2), ScriptConstantFactory.fromHex("ff7f"), OP_EQUAL))
+     fromString(str) must equal (List(BytesToPushOntoStack(2).get, ScriptConstant("ff7f"),
+       BytesToPushOntoStackImpl(2), ScriptConstant("ff7f"), OP_EQUAL))
    }
    it must "parse an OP_1" in {
      val str = "0x51"
@@ -95,22 +95,22 @@ class ScriptParserTest extends FlatSpec with MustMatchers with ScriptParser with
      val str = "0x4b 0x417a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a " +
      "'Azzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz' EQUAL"
 
-     fromString(str) must equal (List(BytesToPushOntoStackFactory.fromNumber(75).get,
-       ScriptConstantFactory.fromHex("417a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a"),
-       BytesToPushOntoStackFactory.fromNumber(75).get,
-       ScriptConstantFactory.fromHex("417a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a"), OP_EQUAL))
+     fromString(str) must equal (List(BytesToPushOntoStack(75).get,
+       ScriptConstant("417a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a"),
+       BytesToPushOntoStack(75).get,
+       ScriptConstant("417a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a7a"), OP_EQUAL))
    }
 
   it must "parse an OP_IF OP_ENDIF block" in {
     val str = "1 0x01 0x80 IF 0 ENDIF"
-    fromString(str) must be (List(OP_1, BytesToPushOntoStackImpl(1), ScriptConstantFactory.fromHex("80"), OP_IF, OP_0, OP_ENDIF))
+    fromString(str) must be (List(OP_1, BytesToPushOntoStackImpl(1), ScriptConstant("80"), OP_IF, OP_0, OP_ENDIF))
   }
 
 
   it must "parse an OP_PUSHDATA1 correctly" in {
     val str = "'abcdefghijklmnopqrstuvwxyz' HASH160 0x4c 0x14 0xc286a1af0947f58d1ad787385b1c2c4a976f9e71 EQUAL"
-    val expectedScript = List(BytesToPushOntoStackFactory.fromNumber(26).get, ScriptConstantImpl("6162636465666768696a6b6c6d6e6f707172737475767778797a"),OP_HASH160,
-      OP_PUSHDATA1, ScriptNumberFactory.fromNumber(20), ScriptConstantImpl("c286a1af0947f58d1ad787385b1c2c4a976f9e71"), OP_EQUAL)
+    val expectedScript = List(BytesToPushOntoStack(26).get, ScriptConstantImpl("6162636465666768696a6b6c6d6e6f707172737475767778797a"),OP_HASH160,
+      OP_PUSHDATA1, ScriptNumber(20), ScriptConstantImpl("c286a1af0947f58d1ad787385b1c2c4a976f9e71"), OP_EQUAL)
     fromString(str) must be (expectedScript)
   }
 
@@ -118,15 +118,15 @@ class ScriptParserTest extends FlatSpec with MustMatchers with ScriptParser with
     //https://tbtc.blockr.io/api/v1/tx/raw/5d254a872c9197c683ea9111fb5c0e2e0f49280a89961c45b9fea76834d335fe
     val str = "4cf1" +
       "55210269992fb441ae56968e5b77d46a3e53b69f136444ae65a94041fc937bdb28d93321021df31471281d4478df85bfce08a10aab82601dca949a79950f8ddf7002bd915a2102174c82021492c2c6dfcbfa4187d10d38bed06afb7fdcd72c880179fddd641ea121033f96e43d72c33327b6a4631ccaa6ea07f0b106c88b9dc71c9000bb6044d5e88a210313d8748790f2a86fb524579b46ce3c68fedd58d2a738716249a9f7d5458a15c221030b632eeb079eb83648886122a04c7bf6d98ab5dfb94cf353ee3e9382a4c2fab02102fb54a7fcaa73c307cfd70f3fa66a2e4247a71858ca731396343ad30c7c4009ce57ae"
-    fromString(str) must be (List(OP_PUSHDATA1, ScriptNumberFactory.fromNumber(241),
-      ScriptConstantFactory.fromHex("55210269992fb441ae56968e5b77d46a3e53b69f136444ae65a94041fc937bdb28d93321021df31471281d4478df85bfce08a10aab82601dca949a79950f8ddf7002bd915a2102174c82021492c2c6dfcbfa4187d10d38bed06afb7fdcd72c880179fddd641ea121033f96e43d72c33327b6a4631ccaa6ea07f0b106c88b9dc71c9000bb6044d5e88a210313d8748790f2a86fb524579b46ce3c68fedd58d2a738716249a9f7d5458a15c221030b632eeb079eb83648886122a04c7bf6d98ab5dfb94cf353ee3e9382a4c2fab02102fb54a7fcaa73c307cfd70f3fa66a2e4247a71858ca731396343ad30c7c4009ce57ae"))
+    fromString(str) must be (List(OP_PUSHDATA1, ScriptNumber(241),
+      ScriptConstant("55210269992fb441ae56968e5b77d46a3e53b69f136444ae65a94041fc937bdb28d93321021df31471281d4478df85bfce08a10aab82601dca949a79950f8ddf7002bd915a2102174c82021492c2c6dfcbfa4187d10d38bed06afb7fdcd72c880179fddd641ea121033f96e43d72c33327b6a4631ccaa6ea07f0b106c88b9dc71c9000bb6044d5e88a210313d8748790f2a86fb524579b46ce3c68fedd58d2a738716249a9f7d5458a15c221030b632eeb079eb83648886122a04c7bf6d98ab5dfb94cf353ee3e9382a4c2fab02102fb54a7fcaa73c307cfd70f3fa66a2e4247a71858ca731396343ad30c7c4009ce57ae"))
     )
   }
 
 
   it must "parse bytes from a string" in {
     val str = "0xFF00"
-    parseBytesFromString(str) must be (List(ScriptNumberFactory.fromNumber(255)))
+    parseBytesFromString(str) must be (List(ScriptNumber(255)))
   }
 
   it must "parse an OP_PUSHDATA2 correctly" in {
@@ -134,14 +134,14 @@ class ScriptParserTest extends FlatSpec with MustMatchers with ScriptParser with
       "0x111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111 " +
       "0x4c 0xFF 0x111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111 " +
       "EQUAL"
-    val expectedScript  =  List(OP_PUSHDATA2, ScriptNumberFactory.fromNumber(255),
-      ScriptConstantFactory.fromHex("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
+    val expectedScript  =  List(OP_PUSHDATA2, ScriptNumber(255),
+      ScriptConstant("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
         "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
         "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
         "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
         "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
-        "1111111"), OP_PUSHDATA1, ScriptNumberFactory.fromNumber(255),
-      ScriptConstantFactory.fromHex("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
+        "1111111"), OP_PUSHDATA1, ScriptNumber(255),
+      ScriptConstant("111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
         "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
         "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
         "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111" +
@@ -183,19 +183,19 @@ class ScriptParserTest extends FlatSpec with MustMatchers with ScriptParser with
 
   it must "parse a OP_PUSHDATA operation that pushes zero bytes correctly" in {
     val str = "0x4c 0x00"
-    ScriptParser.fromString(str) must be (List(OP_PUSHDATA1, ScriptNumberFactory.zero))
+    ScriptParser.fromString(str) must be (List(OP_PUSHDATA1, ScriptNumber.zero))
 
     val str1 = "0x4d 0x00"
-    ScriptParser.fromString(str1) must be (List(OP_PUSHDATA2, ScriptNumberFactory.zero))
+    ScriptParser.fromString(str1) must be (List(OP_PUSHDATA2, ScriptNumber.zero))
 
     val str2 = "0x4e 0x00"
-    ScriptParser.fromString(str2) must be (List(OP_PUSHDATA4, ScriptNumberFactory.zero))
+    ScriptParser.fromString(str2) must be (List(OP_PUSHDATA4, ScriptNumber.zero))
   }
 
   it must "parse a large string constant found inside of script_valid.json" in {
     val str = "'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'"
     val parsed = fromString(str)
-     parsed must be (List(OP_PUSHDATA2, ScriptNumberFactory.fromNumber(520), ScriptConstantFactory.fromHex(
+     parsed must be (List(OP_PUSHDATA2, ScriptNumber(520), ScriptConstant(
       "62626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262626262"
     )))
   }

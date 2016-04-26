@@ -22,16 +22,16 @@ class SpliceInterpreterTest extends FlatSpec with MustMatchers with SpliceInterp
   }
 
   it must "deterine the size of script number 0 correctly" in {
-    val stack = List(ScriptNumberFactory.zero)
+    val stack = List(ScriptNumber.zero)
     val script = List(OP_SIZE)
     val program = ScriptProgram(TestUtil.testProgram, stack,script)
     val newProgram = opSize(program)
-    newProgram.stack must be (List(ScriptNumberFactory.zero,ScriptNumberFactory.zero))
+    newProgram.stack must be (List(ScriptNumber.zero,ScriptNumber.zero))
     newProgram.script.isEmpty must be (true)
   }
 
   it must "evaluate an OP_SIZE correctly with 0x7f" in {
-    val stack = List(ScriptConstantFactory.fromHex("7f"))
+    val stack = List(ScriptConstant("7f"))
     val script = List(OP_SIZE)
     val program = ScriptProgram(TestUtil.testProgram, stack,script)
     val newProgram = opSize(program)
@@ -41,21 +41,21 @@ class SpliceInterpreterTest extends FlatSpec with MustMatchers with SpliceInterp
 
   it must "evaluate an OP_SIZE correctly with 0x8000" in {
     //0x8000 == 128 in bitcoin
-    val stack = List(ScriptNumberFactory.fromNumber(128))
+    val stack = List(ScriptNumber(128))
     val script = List(OP_SIZE)
     val program = ScriptProgram(TestUtil.testProgram, stack,script)
     val newProgram = opSize(program)
-    newProgram.stack must be (List(ScriptNumberFactory.fromNumber(2), ScriptNumberFactory.fromNumber(128)))
+    newProgram.stack must be (List(ScriptNumber(2), ScriptNumber(128)))
     newProgram.script.isEmpty must be (true)
   }
 
 
   it must "evaluate an OP_SIZE correctly with a negative number" in {
-    val stack = List(ScriptNumberFactory.fromNumber(-1))
+    val stack = List(ScriptNumber(-1))
     val script = List(OP_SIZE)
     val program = ScriptProgram(TestUtil.testProgram, stack,script)
     val newProgram = opSize(program)
-    newProgram.stack must be (List(ScriptNumberFactory.one,ScriptNumberFactory.fromNumber(-1)))
+    newProgram.stack must be (List(ScriptNumber.one,ScriptNumber(-1)))
     newProgram.script.isEmpty must be (true)
   }
 }
