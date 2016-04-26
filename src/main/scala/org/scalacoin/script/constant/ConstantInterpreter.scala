@@ -1,8 +1,8 @@
 package org.scalacoin.script.constant
 
-import org.scalacoin.script.error.{ScriptErrorMinimalData, ScriptErrorInvalidStackOperation}
 import org.scalacoin.script.flag.{ScriptFlagUtil, ScriptVerifyMinimalData}
 import org.scalacoin.script.ScriptProgram
+import org.scalacoin.script.result.{ScriptErrorMinimalData, ScriptErrorInvalidStackOperation}
 import org.scalacoin.util.{BitcoinScriptUtil, BitcoinSLogger, BitcoinSUtil}
 import org.slf4j.LoggerFactory
 

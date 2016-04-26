@@ -4,8 +4,8 @@ import org.scalacoin.crypto.{TransactionSignatureComponentFactory, TransactionSi
 import org.scalacoin.protocol.script.{ScriptSignature, ScriptPubKey}
 import org.scalacoin.protocol.transaction.Transaction
 import org.scalacoin.script.constant._
-import org.scalacoin.script.error.ScriptError
 import org.scalacoin.script.flag.ScriptFlag
+import org.scalacoin.script.result.ScriptError
 import org.scalacoin.util.Factory
 
 /**

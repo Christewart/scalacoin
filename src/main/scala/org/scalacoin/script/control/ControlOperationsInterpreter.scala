@@ -1,6 +1,6 @@
 package org.scalacoin.script.control
 
-import org.scalacoin.script.error.{ScriptErrorVerify, ScriptErrorOpReturn, ScriptErrorInvalidStackOperation, ScriptErrorUnbalancedConditional}
+import org.scalacoin.script.result.{ScriptErrorUnbalancedConditional, ScriptErrorInvalidStackOperation, ScriptErrorVerify, ScriptErrorOpReturn}
 import org.scalacoin.script.{ScriptProgram}
 import org.scalacoin.script.constant._
 import org.scalacoin.util._

@@ -2,7 +2,7 @@ package org.scalacoin.script.locktime
 
 import org.scalacoin.protocol.transaction.TransactionConstants
 import org.scalacoin.script.constant.{ScriptToken, ScriptNumberImpl, ScriptNumber}
-import org.scalacoin.script.error.{ScriptError, ScriptErrorNegativeLockTime, ScriptErrorUnsatisfiedLocktime, ScriptErrorInvalidStackOperation}
+import org.scalacoin.script.result.{ScriptErrorUnsatisfiedLocktime, ScriptErrorNegativeLockTime, ScriptErrorInvalidStackOperation, ScriptError}
 import org.scalacoin.script.{ScriptProgram}
 import org.scalacoin.util.BitcoinSLogger
 

@@ -1,8 +1,8 @@
 package org.scalacoin.script.arithmetic
 
 import org.scalacoin.script.control.{ControlOperationsInterpreter, OP_VERIFY}
-import org.scalacoin.script.error.{ScriptErrorMinimalData, ScriptErrorUnknownError, ScriptErrorInvalidStackOperation}
 import org.scalacoin.script.flag.ScriptFlagUtil
+import org.scalacoin.script.result.{ScriptErrorMinimalData, ScriptErrorInvalidStackOperation, ScriptErrorUnknownError}
 import org.scalacoin.script.{ExecutedScriptProgram, PreExecutionScriptProgram, ExecutionInProgressScriptProgram, ScriptProgram}
 import org.scalacoin.script.constant._
 import org.scalacoin.util.{BitcoinScriptUtil, BitcoinSUtil}

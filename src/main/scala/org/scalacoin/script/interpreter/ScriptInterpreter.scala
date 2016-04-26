@@ -2,9 +2,9 @@ package org.scalacoin.script.interpreter
 
 import org.scalacoin.protocol.script._
 import org.scalacoin.protocol.transaction.Transaction
-import org.scalacoin.script.error._
 import org.scalacoin.script.flag._
 import org.scalacoin.script.locktime.{OP_CHECKLOCKTIMEVERIFY, LockTimeInterpreter}
+import org.scalacoin.script.result._
 import org.scalacoin.script.splice._
 import org.scalacoin.script.{ExecutionInProgressScriptProgram, PreExecutionScriptProgram, ExecutedScriptProgram, ScriptProgram}
 import org.scalacoin.script.arithmetic._
@@ -39,7 +39,7 @@ trait ScriptInterpreter extends CryptoInterpreter with StackInterpreter with Con
    * @param program the program to be interpreted
    * @return
    */
-  def run(program : PreExecutionScriptProgram) : Boolean = {
+  def run(program : PreExecutionScriptProgram) : ScriptResult = {
     //TODO: Think about this more to change this from being mutable to immutable - perhaps
     //passing this as an implicit argument to our loop function
     /**
@@ -328,11 +328,15 @@ trait ScriptInterpreter extends CryptoInterpreter with StackInterpreter with Con
 
     }
 
-    if (executedProgram.error.isDefined) false
+    if (executedProgram.error.isDefined) executedProgram.error.get
     else if (executedProgram.stackTopIsTrue && executedProgram.flags.contains(ScriptVerifyCleanStack)) {
       //require that the stack after execution has exactly one element on it
-      executedProgram.stack.size == 1
-    } else executedProgram.stackTopIsTrue
+      executedProgram.stack.size == 1 match {
+        case true => ScriptOk
+        case false => ScriptErrorCleanStack
+      }
+    } else if (executedProgram.stackTopIsTrue) ScriptOk
+    else ScriptErrorEvalFalse
 
   }
 

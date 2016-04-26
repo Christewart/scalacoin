@@ -1,6 +1,6 @@
 package org.scalacoin.script.stack
 
-import org.scalacoin.script.error.ScriptErrorInvalidStackOperation
+import org.scalacoin.script.result.ScriptErrorInvalidStackOperation
 import org.scalacoin.script.{ScriptProgram}
 import org.scalacoin.script.bitwise.OP_EQUAL
 import org.scalacoin.script.constant._

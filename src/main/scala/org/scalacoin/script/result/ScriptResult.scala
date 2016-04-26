@@ -1,14 +1,18 @@
-package org.scalacoin.script.error
+package org.scalacoin.script.result
+
+
+
+sealed trait ScriptResult {
+  def description : String
+}
 
 /**
  * Created by chris on 4/18/16.
  */
-sealed trait ScriptError {
-  def description : String
-}
+sealed trait ScriptError extends ScriptResult
 
 //SCRIPT_ERR_OK = 0,
-case object ScriptErrorOk extends ScriptError {
+case object ScriptOk extends ScriptResult {
   override def description : String = "OK"
 }
 
@@ -106,7 +110,7 @@ case object ScriptErrorDisabledOpCode extends ScriptError {
 
 //SCRIPT_ERR_INVALID_STACK_OPERATION,
 case object ScriptErrorInvalidStackOperation extends ScriptError {
-  override def description : String = ""
+  override def description : String = "INVALID_STACK_OPERATION"
 }
 
 //SCRIPT_ERR_INVALID_ALTSTACK_OPERATION,
@@ -190,8 +194,8 @@ case object ScriptErrorCount extends ScriptError {
 /**
  * Factory companion object for creating ScriptError objects
  */
-object ScriptError {
-  def errors : Seq[ScriptError] = Seq(ScriptErrorOk,ScriptErrorUnknownError,ScriptErrorEvalFalse, ScriptErrorOpReturn,
+object ScriptResult {
+  def results : Seq[ScriptResult] = Seq(ScriptOk,ScriptErrorUnknownError,ScriptErrorEvalFalse, ScriptErrorOpReturn,
     ScriptErrorPushSize, ScriptErrorScriptSize, ScriptErrorOpCount, ScriptErrorStackSize, ScriptErrorSigCount,
     ScriptErrorPubKeyCount,ScriptErrorVerify, ScriptErrorEqualVerify,ScriptErrorCheckSigVerify, ScriptErrorCheckMultiSigVerify,
     ScriptErrorNumEqualVerify, ScriptErrorBadOpCode,ScriptErrorDisabledOpCode,ScriptErrorInvalidStackOperation,
@@ -199,5 +203,5 @@ object ScriptError {
     ScriptErrorUnsatisfiedLocktime, ScriptErrorSigHashType, ScriptErrorSigDer, ScriptErrorMinimalData, ScriptErrorSigPushOnly,
     ScriptErrorSigHighS, ScriptErrorSigNullDummy,ScriptErrorPubKeyType, ScriptErrorCleanStack, ScriptErrorDiscourageUpgradableNOPs,
     ScriptErrorCount)
-  def apply(str : String) : ScriptError = errors.filter(_.description == str).head
+  def apply(str : String) : ScriptResult = results.filter(_.description == str).head
 }

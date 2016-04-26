@@ -1,6 +1,6 @@
 package org.scalacoin.script.splice
 
-import org.scalacoin.script.error.ScriptErrorInvalidStackOperation
+import org.scalacoin.script.result.ScriptErrorInvalidStackOperation
 import org.scalacoin.script.{ScriptOperationFactory, ScriptProgram}
 import org.scalacoin.script.constant._
 import Math._

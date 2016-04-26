@@ -16,10 +16,10 @@
 
 
 
-    <root level="WARN">
+    <root level="INFO">
         <appender-ref ref="STDOUT" />
     </root>
 
-    <logger name="org.scalacoin" level="WARN"/>
+    <logger name="org.scalacoin" level="INFO"/>
 
 </configuration>

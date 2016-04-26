@@ -4,10 +4,10 @@ import org.scalacoin.crypto._
 import org.scalacoin.protocol.script._
 import org.scalacoin.protocol.transaction.Transaction
 import org.scalacoin.script.control.{ControlOperationsInterpreter, OP_VERIFY}
-import org.scalacoin.script.error._
 import org.scalacoin.script.flag.{ScriptFlagUtil, ScriptVerifyNullDummy, ScriptVerifyDerSig}
 import org.scalacoin.script._
 import org.scalacoin.script.constant._
+import org.scalacoin.script.result._
 import org.scalacoin.util.{BitcoinScriptUtil, BitcoinSLogger, BitcoinSUtil, CryptoUtil}
 import org.slf4j.LoggerFactory
 

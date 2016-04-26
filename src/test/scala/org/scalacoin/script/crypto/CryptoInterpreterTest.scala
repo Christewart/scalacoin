@@ -2,7 +2,7 @@ package org.scalacoin.script.crypto
 
 import org.scalacoin.protocol.script.{ScriptSignature, ScriptPubKey}
 import org.scalacoin.protocol.transaction._
-import org.scalacoin.script.error.{ScriptErrorSigDer, ScriptErrorSigNullDummy, ScriptErrorInvalidStackOperation}
+import org.scalacoin.script.result.{ScriptErrorSigNullDummy, ScriptErrorSigDer, ScriptErrorInvalidStackOperation}
 import org.scalacoin.script.{ExecutionInProgressScriptProgram, PreExecutionScriptProgram, ExecutedScriptProgram, ScriptProgram}
 import org.scalacoin.script.arithmetic.OP_NOT
 import org.scalacoin.script.flag.{ScriptFlagFactory, ScriptVerifyDerSig, ScriptVerifyNullDummy}

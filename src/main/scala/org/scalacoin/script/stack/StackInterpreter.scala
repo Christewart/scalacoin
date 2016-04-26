@@ -1,7 +1,7 @@
 package org.scalacoin.script.stack
 
-import org.scalacoin.script.error.{ScriptErrorMinimalData, ScriptErrorInvalidStackOperation}
 import org.scalacoin.script.flag.ScriptFlagUtil
+import org.scalacoin.script.result.{ScriptErrorMinimalData, ScriptErrorInvalidStackOperation}
 import org.scalacoin.script.{ScriptProgram}
 import org.scalacoin.script.constant._
 import org.scalacoin.util.{BitcoinScriptUtil, BitcoinSLogger, BitcoinSUtil}

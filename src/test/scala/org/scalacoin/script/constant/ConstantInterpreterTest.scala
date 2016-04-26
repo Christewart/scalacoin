@@ -2,8 +2,8 @@ package org.scalacoin.script.constant
 
 import org.scalacoin.script.ScriptProgram
 import org.scalacoin.script.bitwise.OP_EQUAL
-import org.scalacoin.script.error.ScriptErrorInvalidStackOperation
 import org.scalacoin.script.flag.ScriptFlag
+import org.scalacoin.script.result.ScriptErrorInvalidStackOperation
 import org.scalacoin.util.{ScriptProgramTestUtil, TestUtil}
 import org.scalatest.{FlatSpec, MustMatchers}
 

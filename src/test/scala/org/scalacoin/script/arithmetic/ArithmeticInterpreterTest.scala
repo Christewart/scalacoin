@@ -1,7 +1,7 @@
 package org.scalacoin.script.arithmetic
 
-import org.scalacoin.script.error.ScriptErrorInvalidStackOperation
 import org.scalacoin.script.flag.ScriptFlag
+import org.scalacoin.script.result.ScriptErrorInvalidStackOperation
 import org.scalacoin.script.{ScriptProgram}
 import org.scalacoin.script.constant._
 import org.scalacoin.util.{ScriptProgramTestUtil, TestUtil}

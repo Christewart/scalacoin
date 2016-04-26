@@ -1,7 +1,7 @@
 package org.scalacoin.script.locktime
 
 import org.scalacoin.protocol.transaction.{TransactionInput, Transaction, UpdateTransactionInputs}
-import org.scalacoin.script.error.{ScriptErrorNegativeLockTime, ScriptErrorUnsatisfiedLocktime, ScriptErrorInvalidStackOperation}
+import org.scalacoin.script.result.{ScriptErrorUnsatisfiedLocktime, ScriptErrorNegativeLockTime, ScriptErrorInvalidStackOperation}
 import org.scalacoin.script.{ExecutionInProgressScriptProgram, ExecutedScriptProgram, PreExecutionScriptProgram, ScriptProgram}
 import org.scalacoin.script.constant.{ScriptNumber, ScriptNumberImpl, OP_0}
 import org.scalacoin.util.{ScriptProgramTestUtil, TestUtil}

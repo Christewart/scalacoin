@@ -1,7 +1,7 @@
 package org.scalacoin.script.control
 
 import org.scalacoin.marshallers.script.ScriptParser
-import org.scalacoin.script.error.{ScriptErrorOpReturn, ScriptErrorInvalidStackOperation}
+import org.scalacoin.script.result.{ScriptErrorInvalidStackOperation, ScriptErrorOpReturn}
 import org.scalacoin.script.{ScriptProgram}
 import org.scalacoin.script.arithmetic.OP_ADD
 import org.scalacoin.script.bitwise.OP_EQUAL
