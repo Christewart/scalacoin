@@ -7,7 +7,7 @@ import org.scalacoin.currency.CurrencyUnits
 import org.scalacoin.protocol.{CompactSizeUIntImpl}
 import org.scalacoin.protocol.script._
 import org.scalacoin.protocol.transaction._
-import org.scalacoin.script.constant.{ScriptNumberImpl, OP_0, ScriptToken}
+import org.scalacoin.script.constant.{ OP_0, ScriptToken}
 import org.slf4j.LoggerFactory
 
 /**

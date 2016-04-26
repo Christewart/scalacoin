@@ -10,7 +10,7 @@ import org.scalacoin.crypto.ECPublicKey
 import org.scalacoin.protocol.script.{UpdateScriptPubKeyAsm, ScriptPubKey}
 import org.scalacoin.protocol.transaction.{TransactionOutput, Transaction}
 import org.scalacoin.script.ScriptOperationFactory
-import org.scalacoin.script.constant.{ScriptConstantImpl, ScriptToken}
+import org.scalacoin.script.constant.{ScriptToken}
 import org.slf4j.LoggerFactory
 import scala.collection.JavaConversions._
 /**
