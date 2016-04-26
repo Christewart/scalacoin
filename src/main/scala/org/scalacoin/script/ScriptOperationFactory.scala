@@ -1,14 +1,15 @@
 package org.scalacoin.script
 
-import org.scalacoin.script.arithmetic.ArithmeticOperationsFactory
-import org.scalacoin.script.bitwise.BitwiseOperationsFactory
+//import org.scalacoin.script.arithmetic.{ArithmeticOperations}
+import org.scalacoin.script.arithmetic.ArithmeticOperation
+import org.scalacoin.script.bitwise.BitwiseOperation
 import org.scalacoin.script.constant._
-import org.scalacoin.script.control.ControlOperationsFactory
-import org.scalacoin.script.crypto.CryptoOperationFactory
-import org.scalacoin.script.locktime.LocktimeOperationFactory
-import org.scalacoin.script.reserved.ReservedOperationFactory
-import org.scalacoin.script.splice.SpliceOperationsFactory
-import org.scalacoin.script.stack.StackOperationFactory
+import org.scalacoin.script.control.ControlOperations
+import org.scalacoin.script.crypto.CryptoOperation
+import org.scalacoin.script.locktime.LocktimeOperation
+import org.scalacoin.script.reserved.ReservedOperation
+import org.scalacoin.script.splice.SpliceOperation
+import org.scalacoin.script.stack.StackOperation
 import org.scalacoin.util.{BitcoinSUtil, BitcoinSLogger}
 import org.slf4j.LoggerFactory
 
@@ -21,14 +22,16 @@ trait ScriptOperationFactory[T <: ScriptOperation] extends BitcoinSLogger {
 
   /**
    * All of the script operations for a particular T
-   * @tparam T
+    *
+    * @tparam T
    * @return
    */
   def operations : Seq[T]
 
   /**
    * Finds a script operation from a given string
-   * @param str
+    *
+    * @param str
    * @return
    */
   def fromString(str : String) : Option[T] = {
@@ -41,7 +44,8 @@ trait ScriptOperationFactory[T <: ScriptOperation] extends BitcoinSLogger {
 
   /**
    * Finds a script operation from its hexadecimal representation
-   * @param hex
+    *
+    * @param hex
    * @return
    */
   def fromHex(hex : String) : Option[T] = operations.find(_.hex == hex.toLowerCase)
@@ -49,7 +53,8 @@ trait ScriptOperationFactory[T <: ScriptOperation] extends BitcoinSLogger {
   /**
    * Removes the 'OP_' prefix from a given operation.
    * Example: OP_EQUALVERIFY would be transformed into EQUALVERIFY
-   * @param str
+    *
+    * @param str
    * @return
    */
   private def removeOP_Prefix(str : String) : String = {
@@ -58,7 +63,8 @@ trait ScriptOperationFactory[T <: ScriptOperation] extends BitcoinSLogger {
 
   /**
    * Finds a script operation from a given byte
-   * @param byte
+    *
+    * @param byte
    * @return
    */
   def fromByte(byte : Byte) : Option[T] = {
@@ -72,12 +78,11 @@ trait ScriptOperationFactory[T <: ScriptOperation] extends BitcoinSLogger {
 }
 
 
-object ScriptOperationFactory extends ScriptOperationFactory[ScriptOperation] {
+object ScriptOperation extends ScriptOperationFactory[ScriptOperation] {
 
-  lazy val operations = ScriptNumberOperation.operations ++ Seq(OP_FALSE,OP_PUSHDATA1, OP_PUSHDATA2,OP_PUSHDATA4,OP_TRUE) ++ StackOperationFactory.operations ++ LocktimeOperationFactory.operations ++
-    CryptoOperationFactory.operations ++ ControlOperationsFactory.operations ++ BitwiseOperationsFactory.operations ++
-    ArithmeticOperationsFactory.operations ++  BytesToPushOntoStackFactory.operations ++ SpliceOperationsFactory.operations ++
-    ReservedOperationFactory.operations
-
+  lazy val operations = ScriptNumberOperation.operations ++ Seq(OP_FALSE,OP_PUSHDATA1, OP_PUSHDATA2,OP_PUSHDATA4,OP_TRUE) ++ StackOperation.operations ++ LocktimeOperation.operations ++
+    CryptoOperation.operations ++ ControlOperations.operations ++ BitwiseOperation.operations ++
+    ArithmeticOperation.operations ++  BytesToPushOntoStack.operations ++ SpliceOperation.operations ++
+    ReservedOperation.operations
 
 }

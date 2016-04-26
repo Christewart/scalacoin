@@ -149,10 +149,10 @@ trait BitcoinScriptUtil {
   def isMinimalPush(pushOp : ScriptToken, token : ScriptToken) : Boolean = token match {
     case scriptNumOp : ScriptNumberOperation =>
       scriptNumOp == pushOp
-    case ScriptConstantFactory.zero | ScriptConstantFactory.negativeZero =>
+    case ScriptConstant.zero | ScriptConstant.negativeZero =>
       //weird case where OP_0 pushes an empty byte vector on the stack, NOT "00" or "81"
       //so we can push the constant "00" or "81" onto the stack with a BytesToPushOntoStack pushop
-      pushOp == BytesToPushOntoStackFactory.fromNumber(1).get
+      pushOp == BytesToPushOntoStack(1).get
     case _ : ScriptToken if ( token.bytes.size == 1 && ScriptNumberOperation.fromNumber(token.toLong.toInt).isDefined) =>
       //could have used the ScriptNumberOperation to push the number onto the stack
       false
