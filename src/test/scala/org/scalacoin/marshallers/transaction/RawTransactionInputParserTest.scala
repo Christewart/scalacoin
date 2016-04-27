@@ -1,7 +1,7 @@
 package org.scalacoin.marshallers.transaction
 
 import org.scalacoin.protocol.transaction.{TransactionConstants, TransactionInput}
-import org.scalacoin.script.constant.{OP_1, BytesToPushOntoStackImpl, OP_0}
+import org.scalacoin.script.constant.{OP_1, OP_0}
 import org.scalacoin.script.crypto.OP_CHECKMULTISIG
 import org.scalacoin.util.{BitcoinSUtil, TestUtil}
 import org.scalatest.{ FlatSpec, MustMatchers}

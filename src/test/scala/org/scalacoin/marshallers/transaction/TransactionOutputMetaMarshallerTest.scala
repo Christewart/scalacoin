@@ -5,7 +5,7 @@ import org.scalacoin.protocol.{script, BitcoinAddress}
 import org.scalacoin.protocol.script.ScriptPubKey
 import org.scalacoin.protocol.transaction.TransactionOutputMeta
 import org.scalacoin.script.bitwise.OP_EQUAL
-import org.scalacoin.script.constant.{BytesToPushOntoStackImpl, ScriptConstant, ScriptToken}
+import org.scalacoin.script.constant.{BytesToPushOntoStack, ScriptConstant, ScriptToken}
 import org.scalacoin.script.crypto.OP_HASH160
 import org.scalatest.{FlatSpec, MustMatchers}
 import spray.json._
@@ -44,7 +44,7 @@ class TransactionOutputMetaMarshallerTest extends FlatSpec with MustMatchers {
     //println(meta.scriptPubKey.asm)
     //println(ScriptPubKey("OP_HASH160 5a81f53ac1ecf0312a2a4df29a734b8f2c0d8c93 OP_EQUAL"))
     val expectedAsm : Seq[ScriptToken] = {
-      Seq(OP_HASH160, BytesToPushOntoStackImpl(20), ScriptConstant("5a81f53ac1ecf0312a2a4df29a734b8f2c0d8c93"), OP_EQUAL)
+      Seq(OP_HASH160, BytesToPushOntoStack(20), ScriptConstant("5a81f53ac1ecf0312a2a4df29a734b8f2c0d8c93"), OP_EQUAL)
     }
     meta.scriptPubKey.asm must be (expectedAsm)
     meta.scriptPubKey.hex must be ("a9145a81f53ac1ecf0312a2a4df29a734b8f2c0d8c9387")
